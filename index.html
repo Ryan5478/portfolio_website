@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Hero</title>
+  <style>
+    :root {
+      --bg: #101826;
+      --bg-2: #0b1220;
+      --bg-3: #0f1728;
+      --card: rgba(255,255,255,0.03);
+      --card-2: rgba(255,255,255,0.045);
+      --text: #f3f6fb;
+      --muted: #9fa9ba;
+      --accent: #8cff1a;
+      --accent-soft: rgba(140, 255, 26, 0.18);
+      --line: rgba(255, 255, 255, 0.08);
+      --shadow: 0 24px 50px rgba(0,0,0,0.28);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(140,255,26,0.07), transparent 30%),
+        radial-gradient(circle at 80% 35%, rgba(140,255,26,0.06), transparent 28%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 28px 0 10px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(16,24,38,0.88), rgba(16,24,38,0.45));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #d9e2f1;
+      text-decoration: none;
+      font-size: 0.96rem;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .hero {
+      min-height: calc(100vh - 96px);
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      gap: 28px;
+      padding: 34px 0 40px;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+    }
+
+    .eyebrow,
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before,
+    .section-eyebrow::before {
+      content: "";
+      width: 44px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent);
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 5vw, 4.8rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      font-size: clamp(1.3rem, 2vw, 2.2rem);
+      font-weight: 800;
+      color: #dbe4f6;
+      margin-bottom: 18px;
+      letter-spacing: -0.04em;
+    }
+
+    .intro .typing {
+      color: var(--accent);
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .intro .typing::after {
+      content: "";
+      display: inline-block;
+      width: 3px;
+      height: 1em;
+      margin-left: 6px;
+      vertical-align: -0.08em;
+      background: var(--accent);
+      animation: blink 0.8s steps(1) infinite;
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .description,
+    .section-text,
+    .card-text,
+    .contact-text,
+    .timeline-text,
+    .project-meta,
+    .footer-text,
+    input,
+    textarea {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.85;
+    }
+
+    .description {
+      font-style: italic;
+      max-width: 600px;
+      margin-bottom: 28px;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn,
+    .btn-secondary {
+      border: 0;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 54px;
+      padding: 0 26px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn {
+      background: var(--accent);
+      color: #09110d;
+      box-shadow: 0 14px 30px rgba(140, 255, 26, 0.22), inset 0 -2px 0 rgba(0,0,0,0.12);
+    }
+
+    .btn:hover,
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn:hover {
+      box-shadow: 0 18px 36px rgba(140, 255, 26, 0.28), inset 0 -2px 0 rgba(0,0,0,0.12);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(140,255,26,0.45);
+      color: var(--accent);
+      background: rgba(255,255,255,0.02);
+      box-shadow: inset 0 0 0 1px rgba(140,255,26,0.05);
+    }
+
+    .btn-secondary:hover {
+      background: var(--accent-soft);
+      box-shadow: 0 14px 30px rgba(140,255,26,0.10);
+    }
+
+    .socials {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      list-style: none;
+    }
+
+    .socials a {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      color: var(--accent);
+      border: 1.5px solid rgba(140,255,26,0.75);
+      background: rgba(255,255,255,0.01);
+      box-shadow: inset 0 0 0 1px rgba(140,255,26,0.08), 0 0 22px rgba(140,255,26,0.09);
+      transition: 0.25s ease;
+    }
+
+    .socials a:hover {
+      transform: translateY(-2px) scale(1.04);
+      background: var(--accent-soft);
+      box-shadow: 0 10px 28px rgba(140,255,26,0.18);
+    }
+
+    .socials svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    .hero-visual {
+      position: relative;
+      height: min(72vw, 560px);
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      isolation: isolate;
+    }
+
+    .photo-shell {
+      position: relative;
+      width: min(68vw, 420px);
+      height: min(68vw, 420px);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+    }
+
+    .photo-shell::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: inset 0 0 28px rgba(255,255,255,0.02);
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: min(53vw, 300px);
+      height: min(53vw, 300px);
+      border-radius: 50%;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 55% 25%, rgba(255,255,255,0.10), transparent 30%),
+        linear-gradient(180deg, #1a2537 0%, #0d1422 100%);
+      border: 1px solid rgba(255,255,255,0.05);
+      box-shadow: 0 24px 50px rgba(0,0,0,0.32);
+    }
+
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.12) translateY(4px);
+    }
+
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      filter: drop-shadow(0 0 10px rgba(140,255,26,0.35));
+      animation: spin 11s linear infinite;
+    }
+
+    .ring-1 {
+      inset: 8px;
+      border-top-color: var(--accent);
+      border-left-color: rgba(140,255,26,0.42);
+    }
+
+    .ring-2 {
+      inset: -12px;
+      border-right-color: rgba(140,255,26,0.70);
+      border-bottom-color: rgba(140,255,26,0.18);
+      animation-direction: reverse;
+      animation-duration: 13s;
+    }
+
+    .ring-3 {
+      inset: 28px;
+      border-top-color: rgba(140,255,26,0.55);
+      border-right-color: rgba(140,255,26,0.20);
+      animation-duration: 9s;
+    }
+
+    .spark {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(140,255,26,0.65);
+      opacity: 0.9;
+      z-index: 2;
+    }
+
+    .spark.s1 { width: 10px; height: 10px; left: 10%; top: 62%; animation: float 4s ease-in-out infinite; }
+    .spark.s2 { width: 7px; height: 7px; left: 18%; top: 70%; animation: float 5s ease-in-out infinite 0.8s; }
+    .spark.s3 { width: 6px; height: 6px; right: 14%; top: 18%; animation: float 4.6s ease-in-out infinite 1.1s; }
+    .spark.s4 { width: 8px; height: 8px; right: 9%; top: 28%; animation: float 3.8s ease-in-out infinite 0.4s; }
+
+    .shape {
+      position: absolute;
+      z-index: 1;
+      opacity: 0.9;
+      animation: drift 6s ease-in-out infinite;
+    }
+
+    .shape.one {
+      left: 8%;
+      bottom: 18%;
+      width: 58px;
+      height: 58px;
+      animation-delay: 0.6s;
+    }
+
+    .shape.two {
+      right: 8%;
+      bottom: 28%;
+      width: 42px;
+      height: 42px;
+      animation-delay: 1.1s;
+    }
+
+    .shape svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .section {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent 18%, transparent 82%, rgba(255,255,255,0.01));
+      pointer-events: none;
+    }
+
+    .section-head {
+      max-width: 720px;
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3vw, 3rem);
+      letter-spacing: -0.05em;
+      margin-bottom: 14px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+    }
+
+    .panel,
+    .project-card,
+    .service-card,
+    .contact-card,
+    .stat,
+    .timeline-item,
+    .skill-chip,
+    .contact-form,
+    .mini-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--card-2), var(--card));
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      border-radius: 28px;
+      padding: 30px;
+    }
+
+    .about-block + .about-block {
+      margin-top: 24px;
+    }
+
+    .about-subtitle,
+    .card-title,
+    .timeline-title,
+    .form-title,
+    .contact-title {
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+      color: #eef4ff;
+    }
+
+    .highlight-grid,
+    .stats-grid,
+    .services-grid,
+    .projects-grid,
+    .contact-grid,
+    .skills-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .highlight-grid,
+    .stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .skills-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .mini-card,
+    .stat,
+    .skill-chip {
+      border-radius: 22px;
+      padding: 20px;
+    }
+
+    .mini-card h4,
+    .stat h3 {
+      font-size: 1rem;
+      color: #e9f2ff;
+      margin-bottom: 8px;
+    }
+
+    .stat .number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .skill-chip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 86px;
+      text-align: center;
+      font-weight: 700;
+      color: #dce8fa;
+    }
+
+    .projects-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .project-card,
+    .service-card,
+    .contact-card,
+    .timeline-item {
+      border-radius: 28px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before,
+    .service-card::before,
+    .contact-card::before,
+    .timeline-item::before,
+    .panel::before,
+    .mini-card::before,
+    .stat::before,
+    .contact-form::before {
+      content: "";
+      position: absolute;
+      inset: auto auto 0 0;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(140,255,26,0.14), transparent 65%);
+      pointer-events: none;
+    }
+
+    .project-tag,
+    .service-tag,
+    .contact-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(140,255,26,0.10);
+      border: 1px solid rgba(140,255,26,0.16);
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .project-link {
+      color: #e5efff;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.25s ease;
+    }
+
+    .project-link:hover {
+      color: var(--accent);
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .service-card ul {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .service-card li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .service-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .timeline-meta {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.94rem;
+      margin-bottom: 10px;
+    }
+
+    .contact-grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: start;
+    }
+
+    .contact-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .contact-form {
+      border-radius: 28px;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .field {
+      display: grid;
+      gap: 10px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.95rem;
+      color: #d8e4f8;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      outline: none;
+      padding: 16px 18px;
+      font-family: inherit;
+      transition: 0.25s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(140,255,26,0.55);
+      box-shadow: 0 0 0 4px rgba(140,255,26,0.10);
+    }
+
+    textarea {
+      min-height: 170px;
+      resize: vertical;
+    }
+
+    footer {
+      padding: 28px 0 44px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .credit {
+      color: rgba(255,255,255,0.58);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .credit .mark {
+      font-size: 1.5rem;
+      line-height: 1;
+      color: #fff;
+    }
+
+    .scroll-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 1px solid rgba(140,255,26,0.38);
+      background: rgba(11,18,32,0.9);
+      color: var(--accent);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: 0.25s ease;
+      z-index: 60;
+    }
+
+    .scroll-top.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes float {
+      50% { transform: translateY(-12px) scale(1.08); }
+    }
+
+    @keyframes drift {
+      50% { transform: translate(8px, -10px) rotate(12deg); }
+    }
+
+    @media (max-width: 1100px) {
+      .projects-grid,
+      .services-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .about-grid,
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding-top: 22px;
+      }
+
+      .hero-copy {
+        margin: 0 auto;
+      }
+
+      .eyebrow,
+      .actions,
+      .socials {
+        justify-content: center;
+      }
+
+      .description {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .projects-grid,
+      .services-grid,
+      .highlight-grid,
+      .stats-grid,
+      .skills-grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      header {
+        position: static;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-bottom: 48px;
+      }
+
+      .hero-visual {
+        min-height: 320px;
+      }
+
+      .actions {
+        gap: 12px;
+      }
+
+      .btn,
+      .btn-secondary {
+        width: 100%;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    .toast-container {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .toast {
+      min-width: 280px;
+      max-width: 360px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(11,18,32,0.92);
+      color: var(--text);
+      box-shadow: var(--shadow);
+      transform: translateY(-12px);
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      backdrop-filter: blur(12px);
+      pointer-events: auto;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      border-color: rgba(140,255,26,0.36);
+      box-shadow: 0 18px 35px rgba(140,255,26,0.12);
+    }
+
+    .toast.error {
+      border-color: rgba(255,111,111,0.30);
+      box-shadow: 0 18px 35px rgba(255,111,111,0.12);
+    }
+
+    .toast-title {
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .toast-message {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 0.96rem;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <nav>
+        <div class="brand">Portfolio<span>.</span></div>
+        <ul class="nav-links" id="navLinks">
+          <li><a class="active" href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="home">
+        <section class="hero-copy">
+          <div class="eyebrow">Portfolio Website</div>
+          <h1>Nalianya Joel</h1>
+          <p class="intro">I'm a <span class="typing" id="typingText">Data Scientist</span></p>
+          <p class="description">
+            Hello, welcome to my portfolio website. I’m passionate about using data science to uncover insights, solve real-world problems, and build intelligent solutions. My goal is to develop data-driven models and analytical systems that are accurate, efficient, and impactful. I enjoy learning fast, tackling complex challenges, and transforming raw data into meaningful information that drives smarter decisions.
+          </p>
+
+          <div class="actions">
+            <a href="#contact" class="btn">Hire Me</a>
+            <a href="#portfolio" class="btn-secondary">View Projects</a>
+
+            <ul class="socials">
+              <li>
+                <a href="https://web.facebook.com/profile.php?id=100089800524988" aria-label="Facebook" target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.55c0-.93.26-1.56 1.6-1.56H17V3.1c-.34-.05-1.48-.1-2.82-.1-2.79 0-4.7 1.7-4.7 4.85V9.6H6.5v3.2h2.98V21h4.02z"/></svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/Ryan5478" aria-label="GitHub" target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.23c0 4.52 2.87 8.35 6.84 9.71.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.36-1.21-3.36-1.21-.45-1.19-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.9 1.58 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.15-4.56-5.1 0-1.13.39-2.05 1.03-2.77-.1-.26-.45-1.31.1-2.74 0 0 .84-.28 2.75 1.06A9.2 9.2 0 0 1 12 6.84c.85 0 1.71.12 2.51.36 1.91-1.34 2.75-1.06 2.75-1.06.55 1.43.2 2.48.1 2.74.64.72 1.03 1.64 1.03 2.77 0 3.96-2.35 4.83-4.59 5.08.36.32.68.95.68 1.92 0 1.39-.01 2.5-.01 2.84 0 .27.18.6.69.49A10.27 10.27 0 0 0 22 12.23C22 6.58 17.52 2 12 2z"/></svg>
+                </a>
+              </li>
+              <li>
+                <a href="#" aria-label="Twitter">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.77 7.74L23 22h-6.08l-4.76-6.22L6.72 22H3.6l7.24-8.28L1 2h6.23l4.3 5.68L18.9 2zm-1.07 18h1.68L6.31 3.9H4.5L17.83 20z"/></svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.linkedin.com/in/joel-nalianya-468a37370/" aria-label="LinkedIn" target="_blank" rel="noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5zM5.25 3A1.97 1.97 0 0 0 3.3 4.97c0 1.08.87 1.97 1.95 1.97h.02c1.1 0 1.97-.9 1.97-1.97A1.97 1.97 0 0 0 5.27 3h-.02zM20.7 12.74c0-3.48-1.86-5.1-4.34-5.1-2 0-2.9 1.12-3.4 1.9V8.5H9.58c.04.69 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.13-.92.27-.68.88-1.39 1.9-1.39 1.34 0 1.88 1.05 1.88 2.6V20H20.7v-7.26z"/></svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="hero-visual">
+          <div class="photo-shell">
+            <span class="ring ring-1"></span>
+            <span class="ring ring-2"></span>
+            <span class="ring ring-3"></span>
+
+            <span class="spark s1"></span>
+            <span class="spark s2"></span>
+            <span class="spark s3"></span>
+            <span class="spark s4"></span>
+
+            <div class="shape one">
+              <svg viewBox="0 0 80 80" aria-hidden="true">
+                <circle cx="16" cy="32" r="6" fill="#8cff1a"/>
+                <circle cx="34" cy="18" r="4" fill="#8cff1a"/>
+                <circle cx="46" cy="38" r="5" fill="#4bf3ff"/>
+                <circle cx="22" cy="52" r="5" fill="#ff7cfb"/>
+                <path d="M54 20l12 6-12 6-6-6 6-6z" fill="#8cff1a"/>
+              </svg>
+            </div>
+
+            <div class="shape two">
+              <svg viewBox="0 0 60 60" aria-hidden="true">
+                <path d="M30 8l12 12-12 12-12-12L30 8z" fill="#6b7cff"/>
+              </svg>
+            </div>
+
+            <div class="avatar-wrap">
+              <img src="profile.jpg" alt="Portfolio profile" />
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="section" id="about">
+        <div class="section-head">
+          <div class="section-eyebrow">About Me</div>
+          <h2 class="section-title">Building intelligent systems with code, data, and creativity.</h2>
+          <p class="section-text">
+            I combine software engineering and data science to create modern digital products, machine learning solutions, analytics dashboards, and intelligent automation systems. I focus on clean architecture, practical impact, and experiences that feel both elegant and useful.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="panel">
+            <div class="about-block">
+              <h3 class="about-subtitle">Who I Am</h3>
+              <p class="section-text">
+                I am a data scientist and software developer with a passion for solving problems through technology. I enjoy working across the full product journey, from gathering ideas and designing interfaces to building backends, training models, and deploying scalable systems.
+              </p>
+            </div>
+
+            <div class="about-block">
+              <h3 class="about-subtitle">What I Do</h3>
+              <div class="highlight-grid">
+                <div class="mini-card">
+                  <h4>Data Science</h4>
+                  <p class="card-text">Machine learning, predictive modeling, data cleaning, and insight generation for smarter decision-making.</p>
+                </div>
+                <div class="mini-card">
+                  <h4>Software Development</h4>
+                  <p class="card-text">Responsive websites, APIs, dashboards, and full-stack systems designed for performance and usability.</p>
+                </div>
+                <div class="mini-card">
+                  <h4>AI Solutions</h4>
+                  <p class="card-text">Intelligent recommendation systems, automation tools, NLP pipelines, and practical AI-powered products.</p>
+                </div>
+                <div class="mini-card">
+                  <h4>Problem Solving</h4>
+                  <p class="card-text">Turning complex requirements into clean digital workflows, visual experiences, and maintainable code.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="stats-grid">
+              <div class="stat">
+                <div class="number">3+</div>
+                <h3>Core Roles</h3>
+                <p class="card-text">Data Scientist, Software Developer, and AI Solution Builder.</p>
+              </div>
+              <div class="stat">
+                <div class="number">10+</div>
+                <h3>Project Types</h3>
+                <p class="card-text">Portfolios, dashboards, APIs, machine learning apps, and intelligent tools.</p>
+              </div>
+              <div class="stat">
+                <div class="number">24/7</div>
+                <h3>Learning Mindset</h3>
+                <p class="card-text">Always improving technical depth, design thinking, and real-world execution.</p>
+              </div>
+              <div class="stat">
+                <div class="number">100%</div>
+                <h3>Commitment</h3>
+                <p class="card-text">Focused on quality, usability, and building meaningful technology.</p>
+              </div>
+            </div>
+
+            <div class="about-block">
+              <h3 class="about-subtitle">Skills & Tools</h3>
+              <div class="skills-grid">
+                <div class="skill-chip">Python</div>
+                <div class="skill-chip">JavaScript</div>
+                <div class="skill-chip">FastAPI</div>
+                <div class="skill-chip">React</div>
+                <div class="skill-chip">Machine Learning</div>
+                <div class="skill-chip">Data Analytics</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="portfolio">
+        <div class="section-head">
+          <div class="section-eyebrow">Portfolio</div>
+          <h2 class="section-title">Selected work and solution-focused projects.</h2>
+          <p class="section-text">
+            These projects reflect my interest in intelligent systems, modern interfaces, backend engineering, and practical data-driven applications.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <div class="project-tag">AI Recommendation System</div>
+            <h3 class="card-title">AI Job Matching Platform</h3>
+            <p class="project-meta">
+              An AI-powered matching system that analyzes resumes and job descriptions, ranks opportunities, and recommends the best fit using semantic understanding and data-driven scoring.
+            </p>
+            <div class="project-actions">
+              <a href="#contact" class="project-link">Discuss Project</a>
+              <a href="#" class="project-link">Live Demo</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-tag">Analytics Dashboard</div>
+            <h3 class="card-title">Business Intelligence Dashboard</h3>
+            <p class="project-meta">
+              A dashboard for visualizing performance metrics, tracking growth indicators, and simplifying decision-making through clean charts, summaries, and reporting tools.
+            </p>
+            <div class="project-actions">
+              <a href="#contact" class="project-link">Request Similar</a>
+              <a href="#" class="project-link">Case Study</a>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-tag">Full Stack Application</div>
+            <h3 class="card-title">Modern Portfolio & Brand Site</h3>
+            <p class="project-meta">
+              A modern personal brand website with responsive design, animated sections, project showcases, and conversion-focused contact experience for a strong digital presence.
+            </p>
+            <div class="project-actions">
+              <a href="#contact" class="project-link">Build Mine</a>
+              <a href="#" class="project-link">Source Code</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <div class="timeline-meta">Workflow 01</div>
+            <h3 class="timeline-title">Research and Planning</h3>
+            <p class="timeline-text">Understanding project goals, identifying user needs, and designing a solution structure that aligns with business and technical objectives.</p>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-meta">Workflow 02</div>
+            <h3 class="timeline-title">Design and Development</h3>
+            <p class="timeline-text">Creating interfaces, building application logic, integrating models, and turning concepts into functional and maintainable systems.</p>
+          </article>
+          <article class="timeline-item">
+            <div class="timeline-meta">Workflow 03</div>
+            <h3 class="timeline-title">Testing and Delivery</h3>
+            <p class="timeline-text">Refining performance, validating features, fixing issues, and preparing the final product for users, deployment, and future growth.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="services">
+        <div class="section-head">
+          <div class="section-eyebrow">Services</div>
+          <h2 class="section-title">Services that blend innovation, function, and real value.</h2>
+          <p class="section-text">
+            I help individuals, startups, and organizations build modern digital products and intelligent systems tailored to their goals.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <div class="service-tag">01 · Web Development</div>
+            <h3 class="card-title">Responsive Website Development</h3>
+            <p class="card-text">Beautiful and user-friendly websites designed to look modern, load fast, and work seamlessly across devices.</p>
+            <ul>
+              <li>Landing pages and personal portfolios</li>
+              <li>Company websites and product showcases</li>
+              <li>Interactive frontend experiences</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="service-tag">02 · Data Science</div>
+            <h3 class="card-title">Data Analysis & Machine Learning</h3>
+            <p class="card-text">Data-driven solutions that extract insights, automate processes, and improve prediction accuracy across real-world tasks.</p>
+            <ul>
+              <li>Exploratory data analysis and dashboards</li>
+              <li>Predictive models and recommendations</li>
+              <li>Data cleaning and feature engineering</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="service-tag">03 · AI Solutions</div>
+            <h3 class="card-title">AI-Powered Product Development</h3>
+            <p class="card-text">End-to-end intelligent systems that combine backend logic, automation, and modern interfaces to solve practical problems.</p>
+            <ul>
+              <li>NLP and recommendation systems</li>
+              <li>API development and deployment</li>
+              <li>Custom automation workflows</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="section-head">
+          <div class="section-eyebrow">Contact</div>
+          <h2 class="section-title">Let’s work together on something meaningful.</h2>
+          <p class="section-text">
+            Whether you need a portfolio website, software solution, dashboard, or AI-powered system, feel free to reach out and share your idea.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-stack">
+            <article class="contact-card">
+              <div class="contact-tag">Email</div>
+              <h3 class="contact-title">Send a direct message</h3>
+              <p class="contact-text">nalianyajoel822@gmail.com</p>
+            </article>
+            <article class="contact-card">
+              <div class="contact-tag">Location</div>
+              <h3 class="contact-title">Based in Kenya</h3>
+              <p class="contact-text">Available for freelance, personal brand, and project collaboration opportunities.</p>
+            </article>
+            <article class="contact-card">
+              <div class="contact-tag">Social Links</div>
+              <h3 class="contact-title">Connect online</h3>
+              <p class="contact-text">GitHub, LinkedIn, and Facebook links are already attached in the hero section for easier access.</p>
+            </article>
+          </div>
+
+          <form class="contact-form" id="contactForm">
+            <h3 class="form-title">Start a Conversation</h3>
+            <p class="contact-text">Fill in the form below to describe your idea, project, or collaboration request.</p>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required />
+              </div>
+              <div class="field full">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" placeholder="Enter the subject" />
+              </div>
+              <div class="field full">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+              </div>
+            </div>
+
+            <div class="actions" style="margin-top: 22px;">
+              <button type="submit" class="btn">Send Message</button>
+            </div>
+            
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p class="footer-text">© <span id="year"></span> Nalianya Joel. All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <button class="scroll-top" id="scrollTopBtn" aria-label="Scroll to top">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 5l7 7-1.4 1.4L13 8.8V20h-2V8.8l-4.6 4.6L5 12l7-7z" fill="currentColor"/>
+    </svg>
+  </button>
+
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    const roles = [
+      "Software Developer",
+      "Data Scientist",
+      "Designer",
+      "Freelancer"
+    ];
+
+    const typingText = document.getElementById("typingText");
+    let roleIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    function typeLoop() {
+      const currentRole = roles[roleIndex];
+
+      if (!deleting) {
+        typingText.textContent = currentRole.slice(0, charIndex + 1);
+        charIndex++;
+
+        if (charIndex === currentRole.length) {
+          deleting = true;
+          setTimeout(typeLoop, 1300);
+          return;
+        }
+      } else {
+        typingText.textContent = currentRole.slice(0, charIndex - 1);
+        charIndex--;
+
+        if (charIndex === 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+        }
+      }
+
+      const speed = deleting ? 45 : 80;
+      setTimeout(typeLoop, speed);
+    }
+
+    typeLoop();
+
+    const sections = document.querySelectorAll("main section[id]");
+    const navLinks = document.querySelectorAll("#navLinks a");
+
+    function updateActiveLink() {
+      let currentId = "home";
+
+      sections.forEach(section => {
+        const top = window.scrollY;
+        const offset = section.offsetTop - 180;
+        const height = section.offsetHeight;
+
+        if (top >= offset && top < offset + height) {
+          currentId = section.getAttribute("id");
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.toggle("active", link.getAttribute("href") === `#${currentId}`);
+      });
+    }
+
+    window.addEventListener("scroll", updateActiveLink);
+    updateActiveLink();
+
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 500) {
+        scrollTopBtn.classList.add("show");
+      } else {
+        scrollTopBtn.classList.remove("show");
+      }
+    });
+
+    scrollTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const API_BASE_URL = "https://YOUR-RENDER-SERVICE.onrender.com";
+    const contactForm = document.getElementById("contactForm");
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    const toastContainer = document.getElementById("toastContainer");
+
+    function showToast(title, message, type = "success") {
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div class="toast-title">${title}</div>
+        <div class="toast-message">${message}</div>
+      `;
+
+      toastContainer.appendChild(toast);
+      requestAnimationFrame(() => toast.classList.add("show"));
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 260);
+      }, 3500);
+    }
+
+    contactForm.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const originalLabel = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = "Sending...";
+
+      const payload = {
+        name: contactForm.name.value.trim(),
+        email: contactForm.email.value.trim(),
+        subject: contactForm.subject.value.trim(),
+        message: contactForm.message.value.trim()
+      };
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/contact`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          showToast("Message sent", "Thanks for reaching out. Your message has been delivered successfully.", "success");
+          contactForm.reset();
+        } else if (result.detail) {
+          const validationMessage = Array.isArray(result.detail)
+            ? result.detail.map(item => item.msg).join(", ")
+            : result.detail;
+
+          showToast("Could not send", validationMessage, "error");
+        } else {
+          showToast("Could not send", result.message || "Failed to send message.", "error");
+        }
+      } catch (error) {
+        showToast("Connection error", "Could not connect to backend. Confirm your live backend URL and that the API is running.", "error");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      }
+    });
+
+
+  </script>
+</body>
+</html>
