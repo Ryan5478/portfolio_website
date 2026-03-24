@@ -39,3 +39,4 @@ Use Resend in production/cloud hosting:
 
 ## Important
 This package still stores messages in SQLite. On free Render, local files are ephemeral, so email notifications are the reliable record unless you later move message storage to Postgres.
+# portfolio_website
